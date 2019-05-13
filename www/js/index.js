@@ -46,31 +46,30 @@ var app = {
 
         console.log('Received Event: ' + id);
 		
-  
-        function didReceiveRemoteNotificationCallBack(jsonData) {
+function didReceiveRemoteNotificationCallBack(jsonData) {
+alert('Внутренний пуш|'+jsonData.payload.additionalData.ssylka);
 }
-        function didOpenRemoteNotificationCallBack(jsonData) {
-}
+function didOpenRemoteNotificationCallBack(jsonData) {
+alert('Внешний|'+jsonData.payload.additionalData.ssylka);
+}       
         //Настройка ПУШЕЙ ДЛЯ АЙФОНА
         var iosSettings = {};
         iosSettings["kOSSettingsKeyAutoPrompt"] = true;
         iosSettings["kOSSettingsKeyInAppLaunchURL"] = true;
-        //ПОДКЛЮЧЕНИЕ ПУШЕЙ
+
+        //ПОДКЛЮЧЕНИЕ ПУШЕЙ 
            window.plugins.OneSignal
           .startInit("299d98c7-7b0e-4fb3-81cc-c0fb349cb21a")
           .handleNotificationReceived(didReceiveRemoteNotificationCallBack)
           .handleNotificationOpened(didOpenRemoteNotificationCallBack)
-              .inFocusDisplaying(window.plugins.OneSignal.OSInFocusDisplayOption.None)
+		  .inFocusDisplaying(window.plugins.OneSignal.OSInFocusDisplayOption.None)
           .iOSSettings(iosSettings)
           .endInit();
-        window.plugins.OneSignal.getIds(function(ids) {
-            ipush = ids.userId;
-			console.log('11121 '+ipush)
-            localStorage.ipush=ipush;
-			
-            });
-
-		
-		
+        
+window.plugins.OneSignal.getIds(function(ids) {
+ipush = ids.userId;
+localStorage.ipush=ipush;
+});
+	    
     }
 };
